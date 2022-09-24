@@ -1,3 +1,4 @@
+
 #Código
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(2,3,4,5,6,7);
@@ -106,3 +107,12 @@ long lectorDistanciaSensor(int triggerPin, int echoPin)
  
   return pulseIn(echoPin, HIGH);
  }
+
+
+#imagens
+![Screenshot_20220924-090549_Gallery](https://user-images.githubusercontent.com/86014599/192097455-34e00d33-bb9d-4612-b7e5-08ee7f9dd737.jpg)
+![Screenshot_20220924-090543_Gallery](https://user-images.githubusercontent.com/86014599/192097457-357171ce-01c6-4e1d-99b9-5322073a6d2b.jpg)
+![Screenshot_20220924-090527_Gallery](https://user-images.githubusercontent.com/86014599/192097458-72cddca2-b18f-49c5-83f5-cd1f31539c6d.jpg)
+![Screenshot_20220924-090517_Gallery](https://user-images.githubusercontent.com/86014599/192097462-d97160b8-3a51-4040-9f32-7dff402e1537.jpg)
+![Screenshot_20220924-090503_Gallery](https://user-images.githubusercontent.com/86014599/192097465-053fa1f9-a2be-47bb-bc9c-8a60415cc7d5.jpg)
+
