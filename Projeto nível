@@ -1,0 +1,108 @@
+#Código
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(2,3,4,5,6,7);
+
+void setup()
+{
+  lcd.begin(16, 2);   //LCD:Indicamos que é do tipo 16x2.
+  pinMode(10,OUTPUT); //LED Verde    : Nivel-Aceito.
+  pinMode(11,OUTPUT); //LED Amarillo : Nivel-medio.
+  pinMode(12,OUTPUT); //LED Vermelho     : Nivel-Baixo.
+  pinMode(13,OUTPUT); //SENSOR SONORO: Nivel-Transbordando
+  pinMode(9,OUTPUT); //valvula: Nivel-valvula
+  pinMode(8,OUTPUT); //Valvula automatica
+}
+
+void loop()
+{
+  //LCD.
+  lcd.setCursor(0,0);//MostrarLCD.
+  lcd.print("Nivel do Tanque");
+  
+  //Sensor-Liquido
+  int distancia = 0.01723 * lectorDistanciaSensor(A1, A0);//cm.
+  int distanciaTanque = map(distancia,34,303,130,0);
+  
+  //Validação da distancia cm.
+  if(distanciaTanque < 0){
+     distanciaTanque = 0;
+  }
+  if(distanciaTanque >145){
+    distanciaTanque = 145;
+  }
+  
+  //Indicador-LED
+  lcd.setCursor(0,1);
+  
+  //Niveis
+  
+   if(distanciaTanque <=145 && distanciaTanque > 120){
+      digitalWrite(10, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(13, HIGH);//Transbordando.
+      digitalWrite(8, HIGH);
+      lcd.print(" ");
+      lcd.print("Saturado");
+      lcd.print(" "); 
+     }
+  if (distanciaTanque <=119 && distanciaTanque > 86){
+      digitalWrite(10, HIGH);//Nivel Aceito.
+      digitalWrite(11, LOW);
+      digitalWrite(12, LOW);
+      digitalWr-+.  ite(13, LOW);
+      digitalWrite(9, LOW);
+      digitalWrite(8, LOW);
+      lcd.print("      ");
+      lcd.print("Cheio");
+      lcd.print("     ");  
+  }
+  
+  if (distanciaTanque <= 87 && distanciaTanque > 44){
+      //Nivel medio
+      digitalWrite(10, LOW);
+      digitalWrite(11, HIGH);
+      digitalWrite(12, LOW);
+      digitalWrite(9, HIGH);
+      digitalWrite(8, LOW);
+      //Lcd
+      lcd.print("      ");
+      lcd.print("Medio");
+      lcd.print("     ");
+  }
+  if(distanciaTanque <= 21){
+      //Nivel Baixo
+      digitalWrite(10, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(12, HIGH);
+      digitalWrite(9, HIGH);
+      digitalWrite(8, LOW);
+     //Lcd
+      lcd.print(" ");
+      lcd.print(" "); 
+      lcd.print("Baixo"); 
+      lcd.print(" ");
+      lcd.print(" ");
+      lcd.print(" ");
+      lcd.print(" ");
+      lcd.print(" ");
+  } 
+}
+
+long lectorDistanciaSensor(int triggerPin, int echoPin)
+{
+ 
+  pinMode(triggerPin,OUTPUT); 
+  pinMode(echoPin, INPUT); 
+  
+ 
+  digitalWrite(triggerPin, LOW); 
+  delayMicroseconds(2);
+  
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(triggerPin, LOW);
+  
+ 
+  return pulseIn(echoPin, HIGH);
+ }
